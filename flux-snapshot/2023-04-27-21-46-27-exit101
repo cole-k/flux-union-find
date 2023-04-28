@@ -1,0 +1,15 @@
+    Updating crates.io index
+    Checking union_find v0.1.0 (/Users/cole/scratch/flux/flux-demos/union-find)
+error[FLUX]: assignment might be unsafe
+  --> src/union_find.rs:74:9
+   |
+74 |         get_mut_node(uf, node_index2).subtree_size = get_node(uf, node_index2).subtree_size + get_node(uf, node_index1).subtree_size;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[FLUX]: assignment might be unsafe
+  --> src/union_find.rs:71:9
+   |
+71 |         get_mut_node(uf, node_index1).subtree_size = get_node(uf, node_index1).subtree_size + get_node(uf, node_index2).subtree_size;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: could not compile `union_find` (bin "union_find") due to 2 previous errors
