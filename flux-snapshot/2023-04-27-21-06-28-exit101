@@ -1,0 +1,60 @@
+    Updating crates.io index
+    Checking union_find v0.1.0 (/Users/cole/scratch/flux/flux-demos/union-find)
+warning: unused import: `union_find::*`
+ --> src/main.rs:5:5
+  |
+5 | use union_find::*;
+  |     ^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: fields `parent_index` and `subtree_size` are never read
+ --> src/union_find.rs:5:5
+  |
+3 | pub struct UFNode {
+  |            ------ fields in this struct
+4 |     #[flux::field(usize{v: v <= array_size})]
+5 |     parent_index: usize,
+  |     ^^^^^^^^^^^^
+6 |     #[flux::field(usize{v: v <= array_size})]
+7 |     subtree_size: usize,
+  |     ^^^^^^^^^^^^
+  |
+  = note: `UFNode` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+  = note: `#[warn(dead_code)]` on by default
+
+warning: field `nodes` is never read
+  --> src/union_find.rs:14:5
+   |
+12 | pub struct UnionFind {
+   |            --------- field in this struct
+13 |     #[flux::field(Vec<UFNode[@array_size]>)]
+14 |     nodes: Vec<UFNode>,
+   |     ^^^^^
+   |
+   = note: `UnionFind` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: function `init_union_find` is never used
+  --> src/union_find.rs:18:4
+   |
+18 | fn init_union_find(size: usize) -> UnionFind {
+   |    ^^^^^^^^^^^^^^^
+
+error[FLUX]: parameter `array_size` cannot be determined
+ --> src/union_find.rs:1:20
+  |
+1 | #[flux::refined_by(array_size: int)]
+  |                    ^^^^^^^^^^ undetermined parameter
+  |
+  = help: try indexing a type with `array_size` in a position that fully determines its value
+
+error[FLUX]: parameter `array_size` cannot be determined
+  --> src/union_find.rs:10:20
+   |
+10 | #[flux::refined_by(array_size: int)]
+   |                    ^^^^^^^^^^ undetermined parameter
+   |
+   = help: try indexing a type with `array_size` in a position that fully determines its value
+
+warning: `union_find` (bin "union_find") generated 4 warnings
+error: could not compile `union_find` (bin "union_find") due to 2 previous errors; 4 warnings emitted
