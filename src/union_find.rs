@@ -19,7 +19,7 @@ pub struct UnionFind {
 }
 
 #[flux::sig(fn(usize[@size]) -> UnionFind[size])]
-fn init_union_find(size: usize) -> UnionFind {
+pub fn init_union_find(size: usize) -> UnionFind {
     let mut nodes = Vec::with_capacity(size);
     for i in 0..size {
         nodes.push(UFNode {
@@ -32,4 +32,15 @@ fn init_union_find(size: usize) -> UnionFind {
         size,
         nodes,
     }
+}
+
+#[flux::sig(fn(&mut UnionFind[@size], node_index: usize{v: v <= size}) -> usize{v: v <= size})]
+pub fn find_root(uf: &mut UnionFind, node_index: usize) -> usize {
+    let parent_index = uf.nodes[node_index].parent_index;
+    if parent_index == node_index {
+        return node_index;
+    }
+    let root = find_root(uf, parent_index);
+    uf.nodes[node_index].parent_index = root;
+    return root;
 }
