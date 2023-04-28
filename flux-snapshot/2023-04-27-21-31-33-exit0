@@ -1,0 +1,67 @@
+    Updating crates.io index
+warning: unused import: `union_find::*`
+ --> src/main.rs:5:5
+  |
+5 | use union_find::*;
+  |     ^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: fields `size`, `parent_index`, and `subtree_size` are never read
+ --> src/union_find.rs:5:5
+  |
+3 | pub struct UFNode {
+  |            ------ fields in this struct
+4 |     #[flux::field(usize[@array_size])]
+5 |     size: usize,
+  |     ^^^^
+6 |     #[flux::field(usize{v: v <= array_size})]
+7 |     parent_index: usize,
+  |     ^^^^^^^^^^^^
+8 |     #[flux::field(usize{v: v <= array_size})]
+9 |     subtree_size: usize,
+  |     ^^^^^^^^^^^^
+  |
+  = note: `UFNode` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+  = note: `#[warn(dead_code)]` on by default
+
+warning: fields `size` and `nodes` are never read
+  --> src/union_find.rs:16:5
+   |
+14 | pub struct UnionFind {
+   |            --------- fields in this struct
+15 |     #[flux::field(usize[@array_size])]
+16 |     size: usize,
+   |     ^^^^
+17 |     #[flux::field(Vec<UFNode[@array_size]>)]
+18 |     nodes: Vec<UFNode>,
+   |     ^^^^^
+   |
+   = note: `UnionFind` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: function `get_node` is never used
+  --> src/union_find.rs:23:4
+   |
+23 | fn get_node(uf: &UnionFind, index: usize) -> &UFNode {
+   |    ^^^^^^^^
+
+warning: function `get_mut_node` is never used
+  --> src/union_find.rs:29:4
+   |
+29 | fn get_mut_node(uf: &mut UnionFind, index: usize) -> &mut UFNode {
+   |    ^^^^^^^^^^^^
+
+warning: function `init_union_find` is never used
+  --> src/union_find.rs:34:8
+   |
+34 | pub fn init_union_find(size: usize) -> UnionFind {
+   |        ^^^^^^^^^^^^^^^
+
+warning: function `find_root` is never used
+  --> src/union_find.rs:50:8
+   |
+50 | pub fn find_root(uf: &mut UnionFind, node_index: usize) -> usize {
+   |        ^^^^^^^^^
+
+warning: `union_find` (bin "union_find") generated 7 warnings (run `cargo fix --bin "union_find"` to apply 1 suggestion)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.46s
