@@ -2,7 +2,7 @@
 #[derive(Debug)]
 pub struct UFNode {
     #[flux::field(usize[@array_size])]
-    size: usize,
+    _size: usize,
     #[flux::field(usize{v: v <= array_size})]
     parent_index: usize,
     #[flux::field(usize{v: v <= array_size})]
@@ -35,7 +35,7 @@ pub fn init_union_find(size: usize) -> UnionFind {
     let mut nodes = Vec::with_capacity(size);
     for i in 0..size {
         nodes.push(UFNode {
-            size,
+            _size: size,
             parent_index: i,
             subtree_size: 0,
         });
@@ -66,11 +66,11 @@ pub fn union(uf: &mut UnionFind, node_index1: usize, node_index2: usize) {
         return;
     }
 
-    if get_node(uf, node_index1).size < get_node(uf, node_index2).size {
+    if get_node(uf, node_index1).subtree_size < get_node(uf, node_index2).subtree_size {
         get_mut_node(uf, node_index2).parent_index = node_index1;
-        get_mut_node(uf, node_index1).size = get_node(uf, node_index1).size + get_node(uf, node_index2).size;
+        get_mut_node(uf, node_index1).subtree_size = get_node(uf, node_index1).subtree_size + get_node(uf, node_index2).subtree_size;
     } else {
         get_mut_node(uf, node_index1).parent_index = node_index2;
-        get_mut_node(uf, node_index2).size = get_node(uf, node_index2).size + get_node(uf, node_index1).size;
+        get_mut_node(uf, node_index2).subtree_size = get_node(uf, node_index2).subtree_size + get_node(uf, node_index1).subtree_size;
     }
 }
