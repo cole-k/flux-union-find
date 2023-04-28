@@ -13,7 +13,7 @@ pub struct UFNode {
 #[derive(Debug)]
 pub struct UnionFind {
     #[flux::field(usize[@array_size])]
-    size: usize,
+    _size: usize,
     #[flux::field(Vec<UFNode[@array_size]>)]
     nodes: Vec<UFNode>,
 }
@@ -41,7 +41,7 @@ pub fn init_union_find(size: usize) -> UnionFind {
         });
     }
     UnionFind {
-        size,
+        _size: size,
         nodes,
     }
 }
@@ -55,4 +55,22 @@ pub fn find_root(uf: &mut UnionFind, node_index: usize) -> usize {
     let root = find_root(uf, parent_index);
     get_mut_node(uf, node_index).parent_index = root;
     return root;
+}
+
+#[flux::sig(fn(&mut UnionFind[@size], node_index1: usize{v: v <= size}, node_index2: usize{v: v <= size}))]
+pub fn union(uf: &mut UnionFind, node_index1: usize, node_index2: usize) {
+    let root1 = find_root(uf, node_index1);
+    let root2 = find_root(uf, node_index2);
+
+    if root1 == root2 {
+        return;
+    }
+
+    if get_node(uf, node_index1).size < get_node(uf, node_index2).size {
+        get_mut_node(uf, node_index2).parent_index = node_index1;
+        get_mut_node(uf, node_index1).size = get_node(uf, node_index1).size + get_node(uf, node_index2).size;
+    } else {
+        get_mut_node(uf, node_index1).parent_index = node_index2;
+        get_mut_node(uf, node_index2).size = get_node(uf, node_index2).size + get_node(uf, node_index1).size;
+    }
 }
